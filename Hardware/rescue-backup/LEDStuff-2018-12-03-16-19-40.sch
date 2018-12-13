@@ -1,0 +1,378 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:device
+LIBS:switches
+LIBS:relays
+LIBS:motors
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:LEDStuff-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L ATMEGA328P-AU U?
+U 1 1 5B2FE407
+P 2600 2450
+F 0 "U?" H 1850 3700 50  0000 L BNN
+F 1 "ATMEGA328P-AU" H 3000 1050 50  0000 L BNN
+F 2 "Housings_QFP:TQFP-32_7x7mm_Pitch0.8mm" H 2600 2450 50  0001 C CIN
+F 3 "" H 2600 2450 50  0001 C CNN
+	1    2600 2450
+	1    0    0    -1  
+$EndComp
+Text Notes 1900 4150 0    60   ~ 0
+Consider optimizing firmware \nand downgrading to a smaller MCU
+$Comp
+L POT RV?
+U 1 1 5B2FE8BD
+P 6100 2000
+F 0 "RV?" V 5925 2000 50  0000 C CNN
+F 1 "10k" V 6000 2000 50  0000 C CNN
+F 2 "" H 6100 2000 50  0001 C CNN
+F 3 "" H 6100 2000 50  0001 C CNN
+	1    6100 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FE972
+P 6100 2250
+F 0 "#PWR?" H 6100 2000 50  0001 C CNN
+F 1 "GND" H 6100 2100 50  0000 C CNN
+F 2 "" H 6100 2250 50  0001 C CNN
+F 3 "" H 6100 2250 50  0001 C CNN
+	1    6100 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR?
+U 1 1 5B2FE9F8
+P 6100 1850
+F 0 "#PWR?" H 6100 1700 50  0001 C CNN
+F 1 "+5V" H 6100 1990 50  0000 C CNN
+F 2 "" H 6100 1850 50  0001 C CNN
+F 3 "" H 6100 1850 50  0001 C CNN
+	1    6100 1850
+	1    0    0    -1  
+$EndComp
+Text Label 6350 1900 0    60   ~ 0
+RED_POT
+$Comp
+L POT RV?
+U 1 1 5B2FEB0F
+P 6850 2000
+F 0 "RV?" V 6675 2000 50  0000 C CNN
+F 1 "10k" V 6750 2000 50  0000 C CNN
+F 2 "" H 6850 2000 50  0001 C CNN
+F 3 "" H 6850 2000 50  0001 C CNN
+	1    6850 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FEB15
+P 6850 2250
+F 0 "#PWR?" H 6850 2000 50  0001 C CNN
+F 1 "GND" H 6850 2100 50  0000 C CNN
+F 2 "" H 6850 2250 50  0001 C CNN
+F 3 "" H 6850 2250 50  0001 C CNN
+	1    6850 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR?
+U 1 1 5B2FEB1B
+P 6850 1850
+F 0 "#PWR?" H 6850 1700 50  0001 C CNN
+F 1 "+5V" H 6850 1990 50  0000 C CNN
+F 2 "" H 6850 1850 50  0001 C CNN
+F 3 "" H 6850 1850 50  0001 C CNN
+	1    6850 1850
+	1    0    0    -1  
+$EndComp
+Text Label 7100 1900 0    60   ~ 0
+GREEN_POT
+$Comp
+L POT RV?
+U 1 1 5B2FEB51
+P 7750 2000
+F 0 "RV?" V 7575 2000 50  0000 C CNN
+F 1 "10k" V 7650 2000 50  0000 C CNN
+F 2 "" H 7750 2000 50  0001 C CNN
+F 3 "" H 7750 2000 50  0001 C CNN
+	1    7750 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FEB57
+P 7750 2250
+F 0 "#PWR?" H 7750 2000 50  0001 C CNN
+F 1 "GND" H 7750 2100 50  0000 C CNN
+F 2 "" H 7750 2250 50  0001 C CNN
+F 3 "" H 7750 2250 50  0001 C CNN
+	1    7750 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR?
+U 1 1 5B2FEB5D
+P 7750 1850
+F 0 "#PWR?" H 7750 1700 50  0001 C CNN
+F 1 "+5V" H 7750 1990 50  0000 C CNN
+F 2 "" H 7750 1850 50  0001 C CNN
+F 3 "" H 7750 1850 50  0001 C CNN
+	1    7750 1850
+	1    0    0    -1  
+$EndComp
+Text Label 7950 1850 0    60   ~ 0
+BLUE_POT
+Text Label 3700 2200 0    60   ~ 0
+RED_POT
+Wire Wire Line
+	3700 2200 3600 2200
+Text Label 3700 2300 0    60   ~ 0
+GREEN_POT
+Text Label 3700 2400 0    60   ~ 0
+BLUE_POT
+Wire Wire Line
+	3700 2300 3600 2300
+Wire Wire Line
+	3700 2400 3600 2400
+$Comp
+L CP1_Small C?
+U 1 1 5B2FECB5
+P 6350 2100
+F 0 "C?" H 6360 2170 50  0000 L CNN
+F 1 "1u" H 6360 2020 50  0000 L CNN
+F 2 "" H 6350 2100 50  0001 C CNN
+F 3 "" H 6350 2100 50  0001 C CNN
+	1    6350 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L CP1_Small C?
+U 1 1 5B2FECE7
+P 7100 2100
+F 0 "C?" H 7110 2170 50  0000 L CNN
+F 1 "1u" H 7110 2020 50  0000 L CNN
+F 2 "" H 7100 2100 50  0001 C CNN
+F 3 "" H 7100 2100 50  0001 C CNN
+	1    7100 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L CP1_Small C?
+U 1 1 5B2FED0F
+P 7950 2100
+F 0 "C?" H 7960 2170 50  0000 L CNN
+F 1 "1u" H 7960 2020 50  0000 L CNN
+F 2 "" H 7950 2100 50  0001 C CNN
+F 3 "" H 7950 2100 50  0001 C CNN
+	1    7950 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6350 2200 6100 2200
+Wire Wire Line
+	6100 2150 6100 2250
+Connection ~ 6100 2200
+Wire Wire Line
+	6350 2000 6250 2000
+Wire Wire Line
+	6350 1900 6350 2000
+Wire Wire Line
+	7100 2200 6850 2200
+Wire Wire Line
+	6850 2150 6850 2250
+Connection ~ 6850 2200
+Wire Wire Line
+	7750 2150 7750 2250
+Wire Wire Line
+	7950 2200 7750 2200
+Connection ~ 7750 2200
+Wire Wire Line
+	7000 2000 7100 2000
+Wire Wire Line
+	7100 2000 7100 1900
+Wire Wire Line
+	7950 2000 7950 1850
+Wire Wire Line
+	7900 2000 7950 2000
+$Comp
+L Barrel_Jack J?
+U 1 1 5B2FF015
+P 850 7400
+F 0 "J?" H 850 7610 50  0000 C CNN
+F 1 "Barrel_Jack" H 850 7225 50  0000 C CNN
+F 2 "" H 900 7360 50  0001 C CNN
+F 3 "" H 900 7360 50  0001 C CNN
+	1    850  7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Q_NMOS_DGS Q?
+U 1 1 5B2FF1C2
+P 6850 4800
+F 0 "Q?" H 7050 4850 50  0000 L CNN
+F 1 "Q_NMOS_DGS" H 7050 4750 50  0000 L CNN
+F 2 "" H 7050 4900 50  0001 C CNN
+F 3 "" H 6850 4800 50  0001 C CNN
+	1    6850 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FF253
+P 6950 5050
+F 0 "#PWR?" H 6950 4800 50  0001 C CNN
+F 1 "GND" H 6950 4900 50  0000 C CNN
+F 2 "" H 6950 5050 50  0001 C CNN
+F 3 "" H 6950 5050 50  0001 C CNN
+	1    6950 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6950 5050 6950 5000
+$Comp
+L Q_NMOS_DGS Q?
+U 1 1 5B2FF2CC
+P 8200 4800
+F 0 "Q?" H 8400 4850 50  0000 L CNN
+F 1 "Q_NMOS_DGS" H 8400 4750 50  0000 L CNN
+F 2 "" H 8400 4900 50  0001 C CNN
+F 3 "" H 8200 4800 50  0001 C CNN
+	1    8200 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FF2D2
+P 8300 5050
+F 0 "#PWR?" H 8300 4800 50  0001 C CNN
+F 1 "GND" H 8300 4900 50  0000 C CNN
+F 2 "" H 8300 5050 50  0001 C CNN
+F 3 "" H 8300 5050 50  0001 C CNN
+	1    8300 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8300 5050 8300 5000
+$Comp
+L Q_NMOS_DGS Q?
+U 1 1 5B2FF338
+P 9450 4800
+F 0 "Q?" H 9650 4850 50  0000 L CNN
+F 1 "Q_NMOS_DGS" H 9650 4750 50  0000 L CNN
+F 2 "" H 9650 4900 50  0001 C CNN
+F 3 "" H 9450 4800 50  0001 C CNN
+	1    9450 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR?
+U 1 1 5B2FF33E
+P 9550 5050
+F 0 "#PWR?" H 9550 4800 50  0001 C CNN
+F 1 "GND" H 9550 4900 50  0000 C CNN
+F 2 "" H 9550 5050 50  0001 C CNN
+F 3 "" H 9550 5050 50  0001 C CNN
+	1    9550 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9550 5050 9550 5000
+Text Label 3750 1450 0    60   ~ 0
+RED_PWM_OUT
+Wire Wire Line
+	3750 1450 3600 1450
+Text Label 3750 1650 0    60   ~ 0
+GREEN_PWM_OUT
+Wire Wire Line
+	3750 1650 3600 1650
+Text Label 3700 2700 0    60   ~ 0
+BLUE_PWM_OUT
+Wire Wire Line
+	3700 2700 3600 2700
+Text Label 6550 4800 2    60   ~ 0
+RED_PWM_OUT
+Wire Wire Line
+	6550 4800 6650 4800
+Text Label 7950 4700 2    60   ~ 0
+GREEN_PWM_OUT
+Text Label 9250 4700 2    60   ~ 0
+BLUE_PWM_OUT
+Wire Wire Line
+	7950 4700 7950 4800
+Wire Wire Line
+	7950 4800 8000 4800
+Wire Wire Line
+	9250 4700 9250 4800
+$Comp
+L +12V #PWR?
+U 1 1 5C05B4B9
+P 1450 7050
+F 0 "#PWR?" H 1450 6900 50  0001 C CNN
+F 1 "+12V" H 1450 7190 50  0000 C CNN
+F 2 "" H 1450 7050 50  0001 C CNN
+F 3 "" H 1450 7050 50  0001 C CNN
+	1    1450 7050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 7300 1450 7300
+Wire Wire Line
+	1450 7300 1450 7050
+$Comp
+L GND #PWR?
+U 1 1 5C05CF38
+P 1450 7600
+F 0 "#PWR?" H 1450 7350 50  0001 C CNN
+F 1 "GND" H 1450 7450 50  0000 C CNN
+F 2 "" H 1450 7600 50  0001 C CNN
+F 3 "" H 1450 7600 50  0001 C CNN
+	1    1450 7600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 7500 1450 7500
+Wire Wire Line
+	1450 7500 1450 7600
+$EndSCHEMATC
