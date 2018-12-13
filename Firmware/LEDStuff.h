@@ -31,5 +31,6 @@ void InitADC(void);
 void SetCompareValue(struct timer timer, uint8_t new_compare_value);
 void SetOCR(struct timer timer);
 volatile uint16_t ReadAdcChannel (int channel);
+uint64_t ReadAM2302(uint8_t ddr, uint8_tport, uint8_t pin);
 
 #endif

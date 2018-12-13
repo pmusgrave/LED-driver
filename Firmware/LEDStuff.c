@@ -22,6 +22,7 @@ int main(void){
   InitTC1();
   InitTC2();
   InitADC();
+
   //  sei();
 
   volatile uint16_t red_pot, green_pot, blue_pot;
@@ -77,24 +78,22 @@ void InitGPIO(void){
 }
 
 void InitTC0(void){
+  TCCR0A = 0x00;
+  TCCR0B = 0x00;
   TCCR0A |= (1<<COM0A1) | (1<<WGM00) | (1<<WGM01);
   TCCR0B |= (1<<CS01);
 }
 
 void InitTC1(void){
-  //  PRR &= ~(1 << PRTIM0);
-  //  TIMSK0 |= (1<<TOIE0);
-  //  TCCR1A |= (1 << WGM00) | (1 << WGM01);
-  //  TCCR1B |= (1 << WGM02);
-  //  TCCR1B |= (1 << CS02) | (1 << CS00);
-  //  TCCR1A |= (1 << COM1A1);
-
+  TCCR1A = 0x00;
+  TCCR1B = 0x00;
   TCCR1A |= (1<<COM1A1) | (1<<WGM10);// | (1<<WGM11);
   TCCR1B |= (1<<WGM12) | (1<<CS11);
-  //  OCR1A = 0;
 }
 
 void InitTC2(void){
+  TCCR2A = 0x00;
+  TCCR2B = 0x00;
   TCCR2A |= (1<<COM2A1) | (1<<WGM20) | (1<<WGM21);
   TCCR2B |= (1<<CS21);
 }
@@ -137,4 +136,64 @@ void SetOCR(struct timer timer){
   }
 
   _delay_ms(10);
+}
+
+uint64_t ReadAM2302(uint8_t ddr, uint8_t port, uint8_t pin){
+  // this must be an atomic operation. If anything else uses interrupts,
+  // disable them here. (Not currently using interrupts.)
+  
+  // MCU sends 1 start bit, AM2302 responds with 1 bit response
+  // and then sends 40 data bits with relative humidity and temperature readings.
+  // configure timer1 to measure sensor clock rate
+  TCCR1A &= ~(1<<WGM10);
+  TCCR1A |= (1<<COM1A1);
+  TCCR1B |= (1<<WGM12) | (1<<CS11);
+  
+  // send start signal
+  ddr |= (1<<pin);
+  port &= ~(1<<pin);
+  _delay_ms(10);
+
+  // pull pin up and wait for response
+  ddr &= ~(1<<pin);
+  port |= (1<<pin);
+  while((port|(1<<pin)) == 1){
+    ;
+  }
+  // response is 80us low, followed by 80us high
+  while((port|(1<<pin)) == 0){
+    ;
+  }
+  
+  uint64_t buffer[40];
+  uint16_t stopwatch_reading;
+  
+  // AM2302 sends, for each data bit, a low signal to signal start of bit, and then a
+  // varying-length high signal. 26-28us == 0, 70us == 1.
+  // There are 40 data bits per measurement.
+  while(int i = 0; i < 40; i++){
+    while((port|(1<<pin)) != 0){
+      ;
+    }
+    // reset timer
+    TCNT1 = 0x0000;
+
+    while((port|(1<<pin)) == 0){
+      ;
+    }
+    stopwatch_reading = TCNT1;
+    while((port|(1<<pin)) == 1){
+      ;
+    }
+
+    if ((TCNT1 - stopwatch_reading) > stopwatch_reading){
+      buffer[i] = 1;
+    }
+    else {
+      buffer[i] = 0;
+    }
+  }
+
+  // reset timer1 to original configuration
+  InitTC1();
 }
