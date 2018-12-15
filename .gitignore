@@ -51,5 +51,11 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+# Emacs backup files
 *~
-#*#
+*#
+
+# Kicad temporary files
+*.000
+*.net
+
