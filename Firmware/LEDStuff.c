@@ -58,21 +58,33 @@ int main(void){
   };
 
   int SpiBuffer = 0;
+  int timer0_buffer = 0;
+  int timer1_buffer = 0;
+  int timer2_buffer = 0;
 
   while(1){
-    _delay_ms(10);
+    // _delay_ms(10);
     SpiBuffer = SPI_SlaveReceive();
 
+    switch (SpiBuffer) {
+      case "R":
+        timer0_buffer = SPI_SlaveReceive();
+      case "G":
+        timer1_buffer = SPI_SlaveReceive();
+      case "B":
+        timer2_buffer = SPI_SlaveReceive();
+    }
+
     // timer1.output_compare_value = ReadAdcChannel(0);
-    timer1.output_compare_value = SpiBuffer % 255;
+    timer1.output_compare_value = timer1_buffer;
     SetOCR(timer1);
 
     // timer0.output_compare_value = ReadAdcChannel(1);
-    timer0.output_compare_value = SpiBuffer % 255;
+    timer0.output_compare_value = timer0_buffer;
     SetOCR(timer0);
 
     // timer2.output_compare_value = ReadAdcChannel(2);
-    timer2.output_compare_value = SpiBuffer % 255;
+    timer2.output_compare_value = timer2_buffer;
     SetOCR(timer2);
   }
 
