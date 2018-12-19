@@ -11,8 +11,6 @@
 
 void SPI_SlaveInit(void);
 int SPI_SlaveReceive(void);
-void SerialInit(void);
-void SerialWrite(int);
 void SetLED(void);
 void ClearLED(void);
 
@@ -27,7 +25,6 @@ void ClearLED(void);
 int main(void){
 	// -------- Inits --------- //
   DDRD |= 0xff;
-  SerialInit();
 	SPI_SlaveInit();
 
 	int SpiBuffer = 0;
@@ -48,7 +45,6 @@ int main(void){
 	}
 	return 0;
 }
-
 
 // from datasheet example
 void SPI_SlaveInit(void)
@@ -75,25 +71,6 @@ int SPI_SlaveReceive(void){
 	;
 	/* Return Data Register */
 	return SPDR;
-}
-
-void SerialInit(void){
-  // based on datasheet example configuration
-  /*Set baud rate */
-  UBRR0H = (unsigned char)(9600>>8);
-  //UBRR0L = (unsigned char)9600;
-  /*Enable receiver and transmitter */
-  UCSR0B = (1<<RXEN0)|(1<<TXEN0);
-  /* Set frame format: 8data, 1stop bit */
-  UCSR0C = (3<<UCSZ00);
-}
-
-void SerialWrite(int data){
-  /* Wait for empty transmit buffer */
-  while ( !( UCSR0A & (1<<UDRE0)) )
-  ;
-  /* Put data into buffer, sends the data */
-  UDR0 = data;
 }
 
 void SetLED(void){
