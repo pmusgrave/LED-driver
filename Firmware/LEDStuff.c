@@ -4,6 +4,9 @@
 #include "LEDStuff.h"
 #include "spitest.h"
 
+#define ASCII_R 82
+#define ASCII_G 71
+#define ASCII_B 66
 /*
 ISR (ADC_vect){
   red_pot = ADC;
@@ -67,11 +70,11 @@ int main(void){
     SpiBuffer = SPI_SlaveReceive();
 
     switch (SpiBuffer) {
-      case "R":
+      case ASCII_R:
         timer0_buffer = SPI_SlaveReceive();
-      case "G":
+      case ASCII_G:
         timer1_buffer = SPI_SlaveReceive();
-      case "B":
+      case ASCII_B:
         timer2_buffer = SPI_SlaveReceive();
     }
 
