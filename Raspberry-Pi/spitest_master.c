@@ -19,10 +19,16 @@ int main(void){
 
     int i = 0;
     while(1){
+      SPI_read_buffer = bcm2835_spi_transfer("R");
       SPI_read_buffer = bcm2835_spi_transfer(i);
 
-      printf("SPI master device sent: %d\tSPI slave device sent: %d\n", i, SPI_read_buffer);
-      sleep(1);
+      SPI_read_buffer = bcm2835_spi_transfer("G");
+      SPI_read_buffer = bcm2835_spi_transfer(100);
+
+      SPI_read_buffer = bcm2835_spi_transfer("B");
+      SPI_read_buffer = bcm2835_spi_transfer(100);
+      // printf("SPI master device sent: %d\tSPI slave device sent: %d\n", i, SPI_read_buffer);
+      // sleep(1);
       i++;
 
     }
