@@ -79,15 +79,15 @@ int main(void){
     }
 
     // timer1.output_compare_value = ReadAdcChannel(0);
-    timer1.output_compare_value = timer1_buffer;
+    timer1.output_compare_value = timer1_buffer%255;
     SetOCR(timer1);
 
     // timer0.output_compare_value = ReadAdcChannel(1);
-    timer0.output_compare_value = timer0_buffer;
+    timer0.output_compare_value = timer0_buffer%255;
     SetOCR(timer0);
 
     // timer2.output_compare_value = ReadAdcChannel(2);
-    timer2.output_compare_value = timer2_buffer;
+    timer2.output_compare_value = timer2_buffer%255;
     SetOCR(timer2);
   }
 
