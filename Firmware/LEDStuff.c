@@ -2,7 +2,8 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 #include "LEDStuff.h"
-  
+#include "spitest.h"
+
 /*
 ISR (ADC_vect){
   red_pot = ADC;
@@ -22,13 +23,14 @@ int main(void){
   InitTC1();
   InitTC2();
   InitADC();
+  SPI_SlaveInit();
   //  sei();
 
   volatile uint16_t red_pot, green_pot, blue_pot;
-  
+
   Timer_output timer0_output_config = {&DDRD, &PORTD, PD6};
   Timer_output timer1_output_config = {&DDRB, &PORTB, PB1};
-  Timer_output timer2_output_config = {&DDRB, &PORTB, PB3};  
+  Timer_output timer2_output_config = {&DDRB, &PORTB, PB3};
 
   struct timer timer0 = {
     TCCR0A,
@@ -55,19 +57,25 @@ int main(void){
     timer2_output_config
   };
 
+  int SpiBuffer = 0;
+
   while(1){
     _delay_ms(10);
- 
-    timer1.output_compare_value = ReadAdcChannel(0);
+    SpiBuffer = SPI_SlaveReceive();
+
+    // timer1.output_compare_value = ReadAdcChannel(0);
+    timer1.output_compare_value = SpiBuffer % 255;
     SetOCR(timer1);
 
-    timer0.output_compare_value = ReadAdcChannel(1);
+    // timer0.output_compare_value = ReadAdcChannel(1);
+    timer0.output_compare_value = SpiBuffer % 255;
     SetOCR(timer0);
 
-    timer2.output_compare_value = ReadAdcChannel(2);
+    // timer2.output_compare_value = ReadAdcChannel(2);
+    timer2.output_compare_value = SpiBuffer % 255;
     SetOCR(timer2);
   }
-  
+
   return 0;
 }
 
@@ -122,7 +130,7 @@ volatile uint16_t ReadAdcChannel(int channel){
 void SetCompareValue(struct timer timer, uint8_t new_compare_value){
   timer.output_compare_value = new_compare_value;
 }
- 
+
 void SetOCR(struct timer timer){
   if(timer.output_compare_value < LED_THRESHOLD){
     timer.timer_config_register = timer.timer_config_disabled_value;

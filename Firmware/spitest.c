@@ -5,46 +5,8 @@
  * Author : Paul Musgrave
  */
 
-#define F_CPU 16000000UL
-
-#include <avr/io.h>
-
-void SPI_SlaveInit(void);
-int SPI_SlaveReceive(void);
-void SetLED(void);
-void ClearLED(void);
-
-// #define LED_PIN 5
-#define LED_PIN 3
-#define SPI_DDR DDRB
-#define SPI_SS DDB2
-#define SPI_MOSI DDB3
-#define SPI_MISO DDB4
-#define SPI_SCK DDB5
-
-int main(void){
-	// -------- Inits --------- //
-  DDRD |= 0xff;
-	SPI_SlaveInit();
-
-	int SpiBuffer = 0;
-  unsigned int i = 0;
-
-	// ------ Event loop ------ //
-	while (1) {
-    SPDR = i;
-		SpiBuffer = SPI_SlaveReceive();
-    // SerialWrite(SpiBuffer);
-    if (SpiBuffer%2 == 0){
-      SetLED();
-    }
-    else{
-      ClearLED();
-    }
-    i++;
-	}
-	return 0;
-}
+ #include <avr/io.h>
+#include "spitest.h"
 
 // from datasheet example
 void SPI_SlaveInit(void)
@@ -71,13 +33,4 @@ int SPI_SlaveReceive(void){
 	;
 	/* Return Data Register */
 	return SPDR;
-}
-
-void SetLED(void){
-	PORTD |= (1<<LED_PIN);
-}
-
-
-void ClearLED(void){
-	PORTD &= ~(1<<LED_PIN);
 }
