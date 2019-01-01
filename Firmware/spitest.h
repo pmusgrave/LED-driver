@@ -11,6 +11,6 @@ int SPI_SlaveReceive(void);
 #define SPI_MISO DDB4
 #define SPI_SCK DDB5
 
-#define SPI_START_RX PD4
+#define SPI_START_RX PD3
 
 #endif
