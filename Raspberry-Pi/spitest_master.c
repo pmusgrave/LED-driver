@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <bcm2835.h>
 
+#define START_PIN RPI_GPIO_P1_16
 #define ASCII_R 82
 #define ASCII_G 71
 #define ASCII_B 66
@@ -9,6 +10,7 @@
 int main(void){
   printf("Initializing SPI configuration...\n");
   bcm2835_init();
+  bcm2835_gpio_fsel(START_PIN, BCM2835_GPIO_FSEL_OUTP);
 
   if(bcm2835_spi_begin()){
     printf("SPI init successful\n");
@@ -25,6 +27,9 @@ int main(void){
     while(1){
       // printf("SPI master device sent: %d\tSPI slave device sent: %d\n", i, SPI_read_buffer);
 
+      bcm2835_gpio_write(START_PIN, HIGH);
+      sleep(1);
+
       i++;
       SPI_read_buffer = bcm2835_spi_transfer(ASCII_R);
       SPI_read_buffer = bcm2835_spi_transfer(i);
@@ -35,7 +40,9 @@ int main(void){
 
       SPI_read_buffer = bcm2835_spi_transfer(ASCII_B);
       SPI_read_buffer = bcm2835_spi_transfer(i);      
-     
+
+      bcm2835_gpio_write(START_PIN,LOW);
+      //      sleep(5);
     }
 
     bcm2835_spi_end();
