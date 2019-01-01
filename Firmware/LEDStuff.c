@@ -1,3 +1,4 @@
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
@@ -7,6 +8,15 @@
 #define ASCII_R 82
 #define ASCII_G 71
 #define ASCII_B 66
+
+volatile uint8_t SpiBuffer = 0;
+volatile uint8_t timer0_buffer = 0;
+volatile uint8_t timer1_buffer = 0;
+volatile uint8_t timer2_buffer = 0;
+volatile int set_timer0_flag = 0;
+volatile int set_timer1_flag = 0;
+volatile int set_timer2_flag = 0;
+volatile int flag = 0;
 /*
 ISR (ADC_vect){
   red_pot = ADC;
@@ -20,6 +30,37 @@ ISR (TIMER0_OVF_vect){
 }
 */
 
+
+ISR (SPI_STC_vect){
+  SpiBuffer = SPDR;
+
+  if(set_timer0_flag == 1){
+    timer0_buffer = SpiBuffer;
+    set_timer0_flag = 0;
+    return;
+  }
+  if(set_timer1_flag == 1){
+    timer1_buffer = SpiBuffer;
+    set_timer1_flag = 0;
+    return;
+  }
+  if(set_timer2_flag == 1){
+    timer2_buffer = SpiBuffer;
+    set_timer2_flag = 0;
+    return;
+  }
+
+  switch (SpiBuffer) {
+    case ASCII_R:
+      set_timer0_flag = 1;
+    case ASCII_G:
+      set_timer1_flag = 1;
+    case ASCII_B:
+      set_timer2_flag = 1;
+  }
+}
+
+
 int main(void){
   InitGPIO();
   InitTC0();
@@ -27,7 +68,8 @@ int main(void){
   InitTC2();
   InitADC();
   SPI_SlaveInit();
-  //  sei();
+  initUART();
+  sei();
 
   volatile uint16_t red_pot, green_pot, blue_pot;
 
@@ -60,15 +102,12 @@ int main(void){
     timer2_output_config
   };
 
-  int SpiBuffer = 0;
-  int timer0_buffer = 0;
-  int timer1_buffer = 0;
-  int timer2_buffer = 0;
-
   while(1){
     // _delay_ms(10);
-    SpiBuffer = SPI_SlaveReceive();
 
+    // SpiBuffer = SPI_SlaveReceive();
+
+/*
     switch (SpiBuffer) {
       case ASCII_R:
         timer0_buffer = SPI_SlaveReceive();
@@ -77,17 +116,18 @@ int main(void){
       case ASCII_B:
         timer2_buffer = SPI_SlaveReceive();
     }
+*/
 
     // timer1.output_compare_value = ReadAdcChannel(0);
-    timer1.output_compare_value = timer1_buffer%255;
+    timer1.output_compare_value = timer1_buffer;
     SetOCR(timer1);
 
     // timer0.output_compare_value = ReadAdcChannel(1);
-    timer0.output_compare_value = timer0_buffer%255;
+    timer0.output_compare_value = timer0_buffer;
     SetOCR(timer0);
 
     // timer2.output_compare_value = ReadAdcChannel(2);
-    timer2.output_compare_value = timer2_buffer%255;
+    timer2.output_compare_value = timer2_buffer;
     SetOCR(timer2);
   }
 
