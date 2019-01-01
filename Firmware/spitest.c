@@ -5,7 +5,7 @@
  * Author : Paul Musgrave
  */
 
- #include <avr/io.h>
+#include <avr/io.h>
 #include "spitest.h"
 
 // from datasheet example
@@ -15,7 +15,12 @@ void SPI_SlaveInit(void)
 	// Set MISO output, all others input
 	SPI_DDR = (1<<SPI_MISO);
 	// Enable SPI
-	SPCR = (1<<SPE);
+	SPCR = (1<<SPE) | (1<<SPIE);
+}
+
+void SPI_Disable(void){
+	SPI_DDR = 0xFF;
+	SPCR &= ~(1<<SPE) | ~(1<<SPIE);
 }
 
 // from datasheet example

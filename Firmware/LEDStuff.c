@@ -34,6 +34,8 @@ ISR (TIMER0_OVF_vect){
 ISR (SPI_STC_vect){
   SpiBuffer = SPDR;
 
+  transmitByte(SpiBuffer);
+
   if(set_timer0_flag == 1){
     timer0_buffer = SpiBuffer;
     set_timer0_flag = 0;
@@ -68,7 +70,6 @@ int main(void){
   InitTC2();
   InitADC();
   SPI_SlaveInit();
-  initUART();
   sei();
 
   volatile uint16_t red_pot, green_pot, blue_pot;
@@ -105,18 +106,14 @@ int main(void){
   while(1){
     // _delay_ms(10);
 
-    // SpiBuffer = SPI_SlaveReceive();
-
-/*
-    switch (SpiBuffer) {
-      case ASCII_R:
-        timer0_buffer = SPI_SlaveReceive();
-      case ASCII_G:
-        timer1_buffer = SPI_SlaveReceive();
-      case ASCII_B:
-        timer2_buffer = SPI_SlaveReceive();
+    if(PIND & (1<<SPI_START_RX)){
+      SPI_SlaveInit();
+      sei();
     }
-*/
+    else {
+      SPI_Disable();
+      cli();
+    }
 
     // timer1.output_compare_value = ReadAdcChannel(0);
     timer1.output_compare_value = timer1_buffer;
@@ -135,8 +132,8 @@ int main(void){
 }
 
 void InitGPIO(void){
-  DDRB |= (1 << LED_PIN) | (1<<PB1) | (1<<PB3);
-  DDRD |= (1<<PD6);
+  DDRB = (1 << LED_PIN) | (1<<PB1) | (1<<PB3);
+  DDRD = (1<<PD6);
 }
 
 void InitTC0(void){
