@@ -34,8 +34,6 @@ ISR (TIMER0_OVF_vect){
 ISR (SPI_STC_vect){
   SpiBuffer = SPDR;
 
-  transmitByte(SpiBuffer);
-
   if(set_timer0_flag == 1){
     timer0_buffer = SpiBuffer;
     set_timer0_flag = 0;
