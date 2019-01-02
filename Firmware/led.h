@@ -1,5 +1,5 @@
-#ifndef LEDSTUFF_H
-#define LEDSTUFF_H
+#ifndef LED_H
+#define LED_H
 
 #define F_CPU 160000000UL
 #define LED_PIN 5

@@ -1,4 +1,4 @@
 #!/bin/bash
 
-avr-objcopy -O ihex -R .eeprom LEDStuff LEDStuff.hex
-avrdude -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:LEDStuff.hex
+avr-objcopy -O ihex -R .eeprom led led.hex
+avrdude -V -c arduino -p ATMEGA328P -P /dev/ttyACM0 -b 115200 -U flash:w:led.hex

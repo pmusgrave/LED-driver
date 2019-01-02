@@ -2,8 +2,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
-#include "LEDStuff.h"
-#include "spitest.h"
+#include "led.h"
+#include "spi.h"
 
 #define ASCII_R 82
 #define ASCII_G 71

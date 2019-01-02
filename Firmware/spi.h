@@ -1,5 +1,5 @@
-#ifndef SPITEST_H
-#define SPITEST_H
+#ifndef SPI_H
+#define SPI_H
 
 void SPI_SlaveInit(void);
 void SPI_Disable(void);

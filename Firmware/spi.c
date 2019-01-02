@@ -1,12 +1,12 @@
 /*
- * spitest.c
+ * spi.c
  *
  * Created: 12/14/2018
  * Author : Paul Musgrave
  */
 
 #include <avr/io.h>
-#include "spitest.h"
+#include "spi.h"
 
 // from datasheet example
 void SPI_SlaveInit(void)
