@@ -4,11 +4,13 @@
 #include <avr/interrupt.h>
 #include "led.h"
 #include "spi.h"
+#include "uart.h"
 
 #define ASCII_R 82
 #define ASCII_G 71
 #define ASCII_B 66
 
+volatile uint8_t uart_buffer = 0;
 volatile uint8_t SpiBuffer = 0;
 volatile uint8_t timer0_buffer = 0;
 volatile uint8_t timer1_buffer = 0;
@@ -67,8 +69,9 @@ int main(void){
   InitTC1();
   InitTC2();
   InitADC();
-  SPI_SlaveInit();
-  sei();
+  initUART();
+  //SPI_SlaveInit();
+  //sei();
 
   volatile uint16_t red_pot, green_pot, blue_pot;
 
@@ -102,8 +105,9 @@ int main(void){
   };
 
   while(1){
-    // _delay_ms(10);
+    //_delay_ms(10);
 
+    /*
     if(PIND & (1<<SPI_START_RX)){
       SPI_SlaveInit();
       sei();
@@ -112,17 +116,35 @@ int main(void){
       SPI_Disable();
       cli();
     }
+    */
 
-    // timer1.output_compare_value = ReadAdcChannel(0);
-    timer1.output_compare_value = timer1_buffer;
+    uart_buffer = receiveByte();
+    switch(uart_buffer){
+    case 'R':
+      timer1.output_compare_value = receiveByte();
+      transmitByte(timer1.output_compare_value);
+      break;
+    case 'G':
+      timer0.output_compare_value = receiveByte();
+      transmitByte(timer0.output_compare_value);
+      break;
+    case 'B':
+      timer2.output_compare_value = receiveByte();
+      transmitByte(timer2.output_compare_value);
+      break;
+    }
+    // printString("OK!\r\n");
+
+    //timer1.output_compare_value = ReadAdcChannel(0);
+    // timer1.output_compare_value = timer1_buffer;
     SetOCR(timer1);
 
-    // timer0.output_compare_value = ReadAdcChannel(1);
-    timer0.output_compare_value = timer0_buffer;
+    //timer0.output_compare_value = ReadAdcChannel(1);
+    // timer0.output_compare_value = timer0_buffer;
     SetOCR(timer0);
 
-    // timer2.output_compare_value = ReadAdcChannel(2);
-    timer2.output_compare_value = timer2_buffer;
+    //timer2.output_compare_value = ReadAdcChannel(2);
+    // timer2.output_compare_value = timer2_buffer;
     SetOCR(timer2);
   }
 
